@@ -7,3 +7,9 @@
 
 # .tfvars files
 *.tfvars
+
+# notes not needed in git
+notes.md
+
+#export env variables script
+export-vars.sh

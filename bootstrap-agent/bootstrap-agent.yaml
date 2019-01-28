@@ -1,0 +1,45 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+  - group: ARM-DETAILS
+  - name: TERRAFORM_VERSION
+    value: 0.11.11 
+
+pool:
+  name: ACI-Pool
+
+steps:
+- task: installTerraform
+  displayName: "Install Terraform"
+  inputs:
+    terraformVersion: '$Terraform'
+    scriptLocation: inlineScript
+    inlineScript: |
+      #!/bin/bash
+      set -e
+      wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      mv terraform /usr/local/bin/terraform
+      rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip 
+
+- task: "initTerraform"
+  displayName: "Initialize Terraform"
+  inputs:
+    workingDirectory: 
+    scriptLocation: inlineScript
+    inLineScript: |
+      #!/bin/bash
+      echo "************* execute terraform init"
+      export ARM_CLIENT_ID=$1
+      export ARM_CLIENT_SECRET=$2
+      export ARM_SUBSCRIPTION_ID=$3
+      export ARM_TENANT_ID=$4
+      export ARM_ACCESS_KEY=$5
+      echo "Run"
+      terraform init  -backend-config=backend.tfvars
