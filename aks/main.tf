@@ -1,12 +1,3 @@
-terraform {
-  required_version = ">= 0.11"
-
-  backend "azurerm" {}
-}
-
-# Configure the Microsoft Azure Provider
-provider "azurerm" {}
-
 resource "azurerm_resource_group" "aks" {
     name     = "${var.resource_group_name}"
     location = "${var.location}"
@@ -53,6 +44,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
         vm_size         = "Standard_DS4_v2"
         os_type         = "Linux"
         os_disk_size_gb = 30
+        vnet_subnet_id = "${var.agentpool_subnet_id}"    
+    }
+
+    network_profile {
+        network_plugin = "${var.network_plugin}"
+        dns_service_ip = "${var.dns_service_ip}"
+        docker_bridge_cidr = "${var.docker_bridge_cidr}"
+        # pod_cidr = "${var.pod_cidr}"
+        service_cidr = "${var.service_cidr}"
     }
 
     service_principal {
@@ -63,6 +63,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     role_based_access_control {
         enabled = true
     }
+
+    azure_active_directory {
+      client_app_id = "${var.client_app_id}"
+
+      server_app_id     = "${var.server_app_id}"
+      server_app_secret = "${var.server_app_secret}"
+}   
 
     addon_profile {
         oms_agent {

@@ -15,6 +15,12 @@ pool:
   name: ACI-Pool
 
 steps:
+- task: pullVaultSecrets
+  inputs:
+    azureSubscription: 
+    keyVaultName: kv-devops-nje
+    secretsFilter: 'aks-sp-cred' 
+
 - task: installTerraform
   displayName: "Install Terraform"
   inputs:
@@ -32,6 +38,8 @@ steps:
   displayName: "Initialize Terraform"
   inputs:
     workingDirectory: 
+    variables:
+    - group:
     scriptLocation: inlineScript
     inLineScript: |
       #!/bin/bash
