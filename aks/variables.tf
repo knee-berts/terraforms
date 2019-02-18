@@ -12,64 +12,64 @@ variable "server_app_secret" {}
 
 # AKS Configurations
 variable "agent_count" {
-    default = 3
+  default = 3
 }
 
 variable "kubernetes_version" {
-    default = "1.12.4"
+  default = "1.12.4"
 }
 
 variable "ssh_public_key" {
-    default = "~/.ssh/id_rsa.pub"
+  default = "~/.ssh/id_rsa.pub"
 }
 
 variable "dns_prefix" {
-    default = "aks-demo"
+  default = "aks-demo"
 }
 
 variable cluster_name {
-    default = "aks-demo"
+  default = "aks-demo"
 }
 
 variable resource_group_name {
-    default = "rg-aks"
+  default = "rg-aks"
 }
 
 variable location {
-    default = "East US"
+  default = "East US"
 }
 
 variable agentpool_subnet_id {}
 
 variable network_plugin {
-    default = "azure"
+  default = "azure"
 }
 
 variable dns_service_ip {
-    default = "10.3.0.10"
+  default = "10.3.0.10"
 }
 
 variable docker_bridge_cidr {
-    default = "172.17.0.1/16"
+  default = "172.17.0.1/16"
 }
 
 variable service_cidr {
-    default = "10.3.0.0/16"
+  default = "10.3.0.0/16"
 }
 
 # Azure Container Insights Configurations
 variable log_analytics_workspace_name {
-    default = "AKSLogAnalyticsWorkspace"
+  default = "AKSLogAnalyticsWorkspace"
 }
 
 # refer https://azure.microsoft.com/global-infrastructure/services/?products=monitor for log analytics available regions
 variable log_analytics_workspace_location {
-    default = "eastus"
+  default = "eastus"
 }
 
 # refer https://azure.microsoft.com/pricing/details/monitor/ for log analytics pricing 
 variable log_analytics_workspace_sku {
-    default = "PerGB2018"
+  default = "PerGB2018"
 }
 
 # Tags applied throughout 
@@ -78,8 +78,8 @@ variable "tags" {
   type        = "map"
 
   default = {
-    source = "terraform"
+    source      = "terraform"
     environment = "demo"
-    purpose = "aksdemo"
+    purpose     = "aksdemo"
   }
 }

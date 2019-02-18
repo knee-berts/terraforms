@@ -49,8 +49,8 @@ variable "tags" {
   type        = "map"
 
   default = {
-    source = "terraform"
+    source      = "terraform"
     environment = "demo"
-    purpose = "aksdemo"
+    purpose     = "aksdemo"
   }
 }
